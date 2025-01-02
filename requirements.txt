@@ -1,11 +1,10 @@
-fastapi
 uvicorn
-sqlalchemy
 pydantic
+pymongo
 bcrypt
-python-dotenv  # Optional: For environment variables
-email-validator  # Useful for validating email inputs
+python-dotenv
+email-validator
 passlib
 sendgrid
 secure-smtplib
-python-dotenv
+motor

@@ -1,6 +1,5 @@
 # utils/password.py
-import random
-import string
+
 
 from passlib.context import CryptContext
 
@@ -17,6 +16,4 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-# Function to generate a random reset token
-def generate_reset_token() -> str:
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=20))
+

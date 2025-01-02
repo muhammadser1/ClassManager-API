@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.models.base import Base
 from app.dependencies.db import engine
 from app.routes import auth, teacher, admin
 
@@ -20,8 +19,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Database initialization
-Base.metadata.create_all(bind=engine)
 
 # Include routes
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])

@@ -4,7 +4,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 from dotenv import load_dotenv
-
+import random
+import string
 load_dotenv()
 
 
@@ -14,7 +15,6 @@ def send_reset_email(to_email: str, token: str, name: str):
     sender_email = os.getenv("EMAIL_USER")
     password = os.getenv("EMAIL_PASSWORD")
     receiver_email = to_email
-    print(sender_email,password)
     # Create the email content
     subject = "Password Reset Request"
     body = f"""
@@ -39,3 +39,8 @@ def send_reset_email(to_email: str, token: str, name: str):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, msg.as_string())
+
+
+# Function to generate a random reset token
+def generate_reset_token() -> str:
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=20))
