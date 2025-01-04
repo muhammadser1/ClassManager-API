@@ -22,7 +22,7 @@ def send_reset_email(to_email: str, token: str, name: str):
 
     We received a request to reset your password. Click the link below to reset your password:
 
-    http://your-frontend-url/reset-password?token={token}
+    http://localhost:5173/reset-password?token={token}
 
     If you did not request a password reset, please ignore this email.
 
