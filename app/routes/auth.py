@@ -9,12 +9,16 @@ from app.models.teacher import Teacher
 from datetime import datetime, timedelta
 from typing import List
 
+from app.utils.token import create_access_token
+
 router = APIRouter()
 
 
 @router.post("/login-teacher")
 async def login_teacher(request: LoginRequest):
+    # Find the teacher by name
     teacher = mongo_db.teachers_collection.find_one({"name": request.name})
+
     if not teacher:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -22,6 +26,7 @@ async def login_teacher(request: LoginRequest):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    # Verify the password
     if not verify_password(request.password, teacher['hashed_password']):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -29,7 +34,13 @@ async def login_teacher(request: LoginRequest):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    return {"message": "Login successful"}
+    # Create JWT token with username, email, and role (is_admin)
+    token = create_access_token({
+        "username": teacher["name"],
+        "email": teacher["email"],
+        "role": "admin" if teacher["is_admin"] else "user"
+    })
+    return {"message": "Login successful", "token": token}
 
 
 @router.post("/signup-teacher")

@@ -8,3 +8,7 @@ passlib
 sendgrid
 secure-smtplib
 motor
+pyjwt
+pyarabic
+python-bidi
+arabic-reshaper
