@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.dependencies.db import engine
-from app.routes import auth, teacher, admin
-
+from app.routes import auth, teacher, admin,event
 # Initialize FastAPI app
 app = FastAPI(
     title="Teacher Management System",
@@ -24,6 +23,7 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(teacher.router, prefix="/teacher", tags=["Teacher"])
 app.include_router(admin.router, prefix="/admin", tags=["Admin"])
+app.include_router(event.router, prefix="/event", tags=["event"])
 
 # Root endpoint
 @app.get("/")

@@ -41,6 +41,32 @@ def send_reset_email(to_email: str, token: str, name: str):
         server.sendmail(sender_email, receiver_email, msg.as_string())
 
 
+# Function to send suggest email
+def send_suggest_email(msg:str):
+    # Configure SMTP server (e.g., using Gmail's SMTP)
+    sender_email = os.getenv("EMAIL_USER")
+    password = os.getenv("EMAIL_PASSWORD")
+    receiver_email = sender_email
+    # Create the email content
+    subject = "suggest or support"
+    body = f"""
+    You received a new suggestion:
+
+    Message:
+    {msg}
+    """
+    # Create the email message
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, msg.as_string())
+
+
 # Function to generate a random reset token
 def generate_reset_token() -> str:
     return ''.join(random.choices(string.ascii_letters + string.digits, k=20))

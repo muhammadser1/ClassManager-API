@@ -15,4 +15,5 @@ def create_access_token(data: dict):
     expiration = datetime.utcnow() + timedelta(hours=1)
     encoded_jwt = jwt.encode({"exp": expiration, **data}, SECRET_KEY, algorithm="HS256")
     return encoded_jwt
-    pass
+
+

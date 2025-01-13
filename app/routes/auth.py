@@ -1,3 +1,4 @@
+import bson
 from fastapi import APIRouter, HTTPException, status, Depends, Request
 from pymongo import MongoClient
 from app.models.MongoDB import mongo_db
@@ -18,7 +19,6 @@ router = APIRouter()
 async def login_teacher(request: LoginRequest):
     # Find the teacher by name
     teacher = mongo_db.teachers_collection.find_one({"name": request.name})
-
     if not teacher:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -48,7 +48,7 @@ async def signup_teacher(request: SignupRequest):
     name = request.name
     email = request.email
     password = request.password
-
+    print(request.birthday)
     # Check if the teacher already exists by email
     existing_teacher = mongo_db.teachers_collection.find_one({"email": email})
     if existing_teacher:
@@ -69,7 +69,7 @@ async def signup_teacher(request: SignupRequest):
     hashed_password = hash_password(password)
 
     # Create a new Teacher object
-    new_teacher = Teacher(name=name, email=email, hashed_password=hashed_password)
+    new_teacher = Teacher(name=name, email=email, hashed_password=hashed_password, birthday=request.birthday)
 
     # Add teacher to MongoDB
     add_teacher_to_db(new_teacher)
