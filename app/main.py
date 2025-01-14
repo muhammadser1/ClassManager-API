@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.dependencies.db import engine
 from app.routes import auth, teacher, admin,event
 # Initialize FastAPI app
 app = FastAPI(
