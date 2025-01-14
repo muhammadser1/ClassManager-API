@@ -1,4 +1,4 @@
-﻿﻿aiosmtplib==3.0.2
+aiosmtplib==3.0.2
 annotated-types==0.7.0
 anyio==4.7.0
 arabic-reshaper==3.0.0
